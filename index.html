@@ -10,24 +10,26 @@
     <link href="https://fonts.bunny.net/css?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-      /* --- Logo Animation: Making it feel 'alive' --- */
+      /* --- Logo Animation: X2 Bigger & 'Alive' --- */
       .main1_logo {
-        width: 450px; /* Larger size as requested */
-        max-width: 90vw; 
+        width: 900px; /* X2 bigger than 450px */
+        max-width: 95vw; /* Almost full width on small mobile screens */
         height: auto;
         transition: transform 0.3s ease;
-        /* Apply the continuous breathing rhythm */
+        /* Continuous breathing rhythm */
         animation: breathe 3.1s ease-in-out infinite;
+        display: block;
+        margin: 0 auto;
       }
 
       @keyframes breathe {
         0% {
           transform: scale(1);
-          filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.1));
+          filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
         }
         50% {
-          transform: scale(1.06); /* Expansion peak */
-          filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+          transform: scale(1.04); /* Slightly smaller scale peak because the image is already huge */
+          filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.3));
         }
         100% {
           transform: scale(1);
@@ -35,8 +37,14 @@
       }
 
       .main1_logo:hover {
-        animation-play-state: paused; /* Pause rhythm on hover for steady clicking */
-        transform: scale(1.1); /* Extra pop on hover */
+        animation-play-state: paused; 
+        transform: scale(1.08); /* Pop on hover */
+      }
+
+      /* Adjusting the top section to handle the giant logo */
+      .main1 {
+        padding-top: 50px;
+        padding-bottom: 50px;
       }
 
       /* --- Merged Stupid-Proof Copier Styles --- */
