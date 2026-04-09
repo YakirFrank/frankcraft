@@ -10,38 +10,62 @@
     <link href="https://fonts.bunny.net/css?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
+      /* --- Logo Animation: Making it feel 'alive' --- */
+      .main1_logo {
+        width: 450px; /* Larger size as requested */
+        max-width: 90vw; 
+        height: auto;
+        transition: transform 0.3s ease;
+        /* Apply the continuous breathing rhythm */
+        animation: breathe 3.1s ease-in-out infinite;
+      }
+
+      @keyframes breathe {
+        0% {
+          transform: scale(1);
+          filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.1));
+        }
+        50% {
+          transform: scale(1.06); /* Expansion peak */
+          filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .main1_logo:hover {
+        animation-play-state: paused; /* Pause rhythm on hover for steady clicking */
+        transform: scale(1.1); /* Extra pop on hover */
+      }
+
       /* --- Merged Stupid-Proof Copier Styles --- */
-      
-      /* Target container where we place the copier */
       .main1_ipcopier_div {
         display: flex;
-        justify-content: center; /* Center horizontally */
-        margin-top: 20px; /* Space above */
+        justify-content: center;
+        margin-top: 25px;
       }
 
-      /* The overall container block, dark, mimicking Minecraft UI */
       .server-instruction-container {
-        font-family: 'Space Grotesk', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Space Grotesk', sans-serif;
         text-align: center;
         padding: 20px;
-        background-color: #1e1e1e; /* Dark theme to match Minecraft style */
+        background-color: #1e1e1e;
         border-radius: 12px;
         width: 100%;
-        max-width: 400px; /* Keeps it contained */
+        max-width: 400px;
         color: white;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.5); /* Subtle depth */
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
       }
 
-      /* Step 1 Header */
       .header-instruction-text {
         font-size: 1.1rem;
         margin-bottom: 15px;
         font-weight: bold;
       }
 
-      /* The button: now the primary action to copy */
       .copy-button-main {
-        background-color: #28a745; /* Green color from your image */
+        background-color: #28a745;
         color: white;
         border: none;
         padding: 15px 20px;
@@ -62,20 +86,17 @@
         transform: translateY(2px);
       }
 
-      /* Step 2 Instruction text */
       .instruction-text-block {
         margin-top: 15px;
         font-size: 0.95rem;
         line-height: 1.4;
-        color: #ccc; /* Slightly dimmer for contrast */
+        color: #ccc;
       }
 
-      /* Highlight the critical action word */
       .highlight {
-        color: #ffcc00; /* Gold/yellow highlight */
+        color: #ffcc00;
         font-weight: bold;
       }
-      /* ------------------------------------------- */
     </style>
   </head>
   <body>
@@ -135,38 +156,23 @@
           </div>
           
           <script>
-            // --- Merged JavaScript for Copier Feedback ---
             function copyIPMain() {
               const ipAddress = "play.frank-craft.com";
               const button = document.getElementById("copyBtnMain");
               
-              // Copy to Clipboard (Native Browser Function)
               navigator.clipboard.writeText(ipAddress).then(() => {
-                  // Visual feedback: '✅ COPIED!'
                   const originalButtonText = button.innerHTML;
                   button.innerHTML = "✅ COPIED!";
-                  button.style.backgroundColor = "#007bff"; // Temporarily turns blue
+                  button.style.backgroundColor = "#007bff"; 
                   
-                  // Restore button after 2 seconds
                   setTimeout(() => {
                     button.innerHTML = originalButtonText;
-                    button.style.backgroundColor = "#28a745"; // Back to green
+                    button.style.backgroundColor = "#28a745"; 
                   }, 2000);
               }).catch(err => {
                   console.error('Failed to copy: ', err);
-                  button.innerHTML = "❌ Copy Failed!";
-                  setTimeout(() => {
-                    button.innerHTML = originalButtonText;
-                  }, 2000);
               });
             }
-
-            // Existing template jQuery (removed click event on old button)
-            $(document).ready(function() {
-              // The specific jQuery popup confirmation code was removed 
-              // as the visual feedback is now handled directly by the button state change.
-            });
-            // -------------------------------------------
           </script>
         </div>
         
