@@ -10,16 +10,17 @@
     <link href="https://fonts.bunny.net/css?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-      /* --- Logo Animation: X2 Bigger & 'Alive' --- */
+      /* --- Logo Animation: Giant & 'Alive' --- */
       .main1_logo {
-        width: 900px; /* X2 bigger than 450px */
-        max-width: 95vw; /* Almost full width on small mobile screens */
+        width: 900px; 
+        max-width: 95vw;
         height: auto;
         transition: transform 0.3s ease;
-        /* Continuous breathing rhythm */
         animation: breathe 3.1s ease-in-out infinite;
         display: block;
         margin: 0 auto;
+        position: relative;
+        z-index: 2;
       }
 
       @keyframes breathe {
@@ -28,8 +29,8 @@
           filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
         }
         50% {
-          transform: scale(1.04); /* Slightly smaller scale peak because the image is already huge */
-          filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.3));
+          transform: scale(1.04);
+          filter: drop-shadow(0 0 35px rgba(255, 255, 255, 0.4));
         }
         100% {
           transform: scale(1);
@@ -38,20 +39,23 @@
 
       .main1_logo:hover {
         animation-play-state: paused; 
-        transform: scale(1.08); /* Pop on hover */
+        transform: scale(1.08);
       }
 
-      /* Adjusting the top section to handle the giant logo */
       .main1 {
         padding-top: 50px;
         padding-bottom: 50px;
+        position: relative; 
+        overflow: visible;
       }
 
-      /* --- Merged Stupid-Proof Copier Styles --- */
+      /* --- Stupid-Proof Copier Styles --- */
       .main1_ipcopier_div {
         display: flex;
         justify-content: center;
         margin-top: 25px;
+        position: relative;
+        z-index: 3;
       }
 
       .server-instruction-container {
@@ -86,13 +90,8 @@
         box-shadow: 0 4px 6px rgba(0,0,0,0.3);
       }
 
-      .copy-button-main:hover {
-        background-color: #218838;
-      }
-
-      .copy-button-main:active {
-        transform: translateY(2px);
-      }
+      .copy-button-main:hover { background-color: #218838; }
+      .copy-button-main:active { transform: translateY(2px); }
 
       .instruction-text-block {
         margin-top: 15px;
@@ -101,14 +100,12 @@
         color: #ccc;
       }
 
-      .highlight {
-        color: #ffcc00;
-        font-weight: bold;
-      }
+      .highlight { color: #ffcc00; font-weight: bold; }
     </style>
   </head>
   <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
     <nav class="desktop_navbar">
       <a href="#"><img class="desktop_navbar_logo_img" src="media/logo_small.png" alt="logo"></a>
       <a href="https://wiki.frank-craft.com/" class="desktop_navbar_link">Wiki</a>
@@ -118,33 +115,15 @@
           <a href="#join" class="desktop_navbar_link2 scroll">Join Us!</a>
       </div>
     </nav>
-    <div class="mobile_navbar">
-      <a href="#" class="mobile_navbar_logo_img_a"><img class="mobile_navbar_logo_img" src="media/logo_small.png" alt="logo"></a>
-      <div id="mobile_navbar_links">
-          <a class="mobile_navbar_link" onclick="mobile_navbar_link_hider()" href="https://wiki.frank-craft.com/">Wiki</a>
-          <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="#discord">Community</a>
-          <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="#about">About Us</a>
-          <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="#join">Join Us</a>
-        </div>
-        <div class="icon" onclick="mobile_navbar_link_hider()">
-            <i class="fa fa-bars"></i>
-        </div>
-        <script>
-            function mobile_navbar_link_hider() {
-            var x = document.getElementById("mobile_navbar_links");
-            if (x.style.display === "flex") {
-                x.style.display = "none";
-            } else {
-                x.style.display = "flex";
-            }
-            } 
-        </script>
-    </div>
+
     <div class="mainflex">
       <div class="main1">
+        <canvas id="particleCanvas" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 1;"></canvas>
+
         <a class="main1_logo_a" href="#">
-          <img class="main1_logo" src="media/logo.png" alt="logo">
+          <img class="main1_logo" id="logoImg" src="media/logo.png" alt="logo">
         </a>
+
         <div class="main1_description">
           <a>Discover the Village of</a><br>
           <a class="main1_actcent">Frank-Craft</a><a>.</a>
@@ -153,145 +132,97 @@
         <div class="main1_ipcopier_div">
           <div class="server-instruction-container">
             <div class="header-instruction-text">Ready to play? Follow these 2 steps:</div>
-            
             <button class="copy-button-main" id="copyBtnMain" onclick="copyIPMain()" type="button">
               1. CLICK TO COPY IP: play.frank-craft.com
             </button>
-
             <div class="instruction-text-block">
               2. Open Minecraft and <span class="highlight">PASTE (Ctrl+V)</span> this address into your Server List.
             </div>
           </div>
-          
-          <script>
+        </div>
+
+        <script>
+            // --- Copier Function ---
             function copyIPMain() {
-              const ipAddress = "play.frank-craft.com";
-              const button = document.getElementById("copyBtnMain");
-              
-              navigator.clipboard.writeText(ipAddress).then(() => {
-                  const originalButtonText = button.innerHTML;
-                  button.innerHTML = "✅ COPIED!";
-                  button.style.backgroundColor = "#007bff"; 
-                  
+              const ip = "play.frank-craft.com";
+              const btn = document.getElementById("copyBtnMain");
+              navigator.clipboard.writeText(ip).then(() => {
+                  const oldTxt = btn.innerHTML;
+                  btn.innerHTML = "✅ COPIED!";
+                  btn.style.backgroundColor = "#007bff"; 
                   setTimeout(() => {
-                    button.innerHTML = originalButtonText;
-                    button.style.backgroundColor = "#28a745"; 
+                    btn.innerHTML = oldTxt;
+                    btn.style.backgroundColor = "#28a745"; 
                   }, 2000);
-              }).catch(err => {
-                  console.error('Failed to copy: ', err);
               });
             }
-          </script>
-        </div>
-        
-        <a href="#more" class="scroll">
-          <img alt="downarrow" class="main1_downarrow" src="media/downarrow.png">
-        </a>
-        <script>
-          const scrollLinks = document.querySelectorAll('.scroll');
-          scrollLinks.forEach(function(link) {
-            link.addEventListener('click', function(event) {
-              event.preventDefault();
-              const target = document.querySelector(link.getAttribute('href'));
-              const offsetTop = target.offsetTop;
-              window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-              });
-            });
-          });
+
+            // --- Particle System ---
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+
+            function resize() {
+                canvas.width = 1400; 
+                canvas.height = 900;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            class Particle {
+                constructor() {
+                    this.x = canvas.width / 2 + (Math.random() - 0.5) * 600;
+                    this.y = canvas.height / 2 + (Math.random() - 0.5) * 300;
+                    this.size = Math.random() * 5 + 2;
+                    this.speedX = (Math.random() - 0.5) * 10;
+                    this.speedY = (Math.random() - 0.5) * 10;
+                    // Minecraft palette: Dark gray, brown, and a rare gold bit
+                    const colors = ['#555', '#8B4513', '#333', '#DAA520'];
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
+                    this.alpha = 1;
+                    this.rotation = Math.random() * 360;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.alpha -= 0.015;
+                    this.rotation += 4;
+                }
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.alpha;
+                    ctx.fillStyle = this.color;
+                    ctx.shadowBlur = 5;
+                    ctx.shadowColor = this.color;
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rotation * Math.PI / 180);
+                    ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+                    ctx.restore();
+                }
+            }
+
+            function createBurst() {
+                for (let i = 0; i < 25; i++) { particles.push(new Particle()); }
+            }
+
+            // Sync with 3.1s CSS pulse
+            setInterval(createBurst, 3100); 
+            setTimeout(() => { setInterval(createBurst, 3100); }, 1550);
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                    if (particles[i].alpha <= 0) { particles.splice(i, 1); i--; }
+                }
+                requestAnimationFrame(animate);
+            }
+            animate();
         </script>
       </div>
+
       <div id="more"></div>
-      <div class="main2">
-        <a class="headline">What we have</a>
-        <div class="main2_features_div">
-          <div class="main2_feature">
-            <img class="main2_feature_img" alt="Feature Image" src="media/placeholder.png">
-            <a class="main2_feature_headline">Apprentice Smithy</a>
-            <a class="main2_feature_text">Custom gear and unique RPG trades.</a>
-          </div>
-          <div class="main2_feature">
-            <img class="main2_feature_img" alt="Feature Image" src="media/placeholder.png">
-            <a class="main2_feature_headline">Global Waypoints</a>
-            <a class="main2_feature_text">Fast travel between discovered regions.</a>
-          </div>
-          <div class="main2_feature">
-            <img class="main2_feature_img" alt="Feature Image" src="media/placeholder.png">
-            <a class="main2_feature_headline">Endless Quests</a>
-            <a class="main2_feature_text">Uri the Guide will lead your journey.</a>
-          </div>
-          <div class="main2_feature">
-            <img class="main2_feature_img" alt="Feature Image" src="media/placeholder.png">
-            <a class="main2_feature_headline">Secured Regions</a>
-            <a class="main2_feature_text">Grief-protected building zones.</a>
-          </div>
-          <div class="main2_feature">
-            <img class="main2_feature_img" alt="Feature Image" src="media/placeholder.png">
-            <a class="main2_feature_headline">Dynamic Economy</a>
-            <a class="main2_feature_text">Sell your loot and build your wealth.</a>
-          </div>
-        </div>
       </div>
-      <div id="discord"></div>
-      <div class="main4">
-        <a class="headline">Join the Discord</a>
-        <div class="main4_dc_div">
-          <iframe class="main4_dc_widget" src="https://discord.com/widget?id=1491580977259089922&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-          <div class="main4_dc_description_div">
-            <a class="main4_dc_description_title">Let's talk!</a>
-            <a class="main4_dc_description"> ・Meet other players <br> ・Ask questions <br> ・Get notified about updates <br> ・Give feedback  <br><br> &amp; more </a>
-            <a href="https://discord.gg/v9Nd8NJTGs" class="main4_dc_button_a" target="_blank">
-              <div class="main4_dc_button">Join</div>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div id="about"></div>
-      <div class="main5">
-        <a class="headline">Who we are</a>
-        <div class="main5_admin_div">
-          <div class="main5_admins_div main5_admins_dev_type2">
-            <img class="main5_admins_img" alt="admin member img" src="media/member_placeholder.webp">
-            <div class="main5_admins_description_div">
-              <a class="main5_admins_description_rank main5_admins_description_rank_owner">[Owner]</a>
-              <a class="main5_admins_description_title">Frank</a>
-              <a class="main5_admins_description">Architect of the <br>Village World.</a>
-            </div>
-          </div>
-          <div class="main5_admins_div main5_admins_dev_type1">
-            <img class="main5_admins_img" alt="admin member img" src="media/member_placeholder.webp">
-            <div class="main5_admins_description_div">
-              <a class="main5_admins_description_rank main5_admins_description_rank_admin">[Guide]</a>
-              <a class="main5_admins_description_title">Uri</a>
-              <a class="main5_admins_description">Guides adventurers <br>on endless quests.</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="join"></div>
-      <div class="main3">
-        <a class="headline">How to join</a>
-        <div class="main3_join_div_div">
-          <div class="main3_join_div">
-            <a class="main3_join_title">Java Edition</a>
-            <div class="main3_join_content_div">
-              <div class="main3_join_categories">
-                <a>IP:</a>
-                <a>Version:</a>
-              </div>
-              <div class="main3_join_values">
-                <a>play.frank-craft.com</a>
-                <a>1.20.1</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <footer class="copyright_div">
-      <a class="copyright">NOT AN OFFICIAL MINECRAFT PRODUCT. NOT ASSOCIATED WITH MOJANG OR MICROSOFT.</a><br>
-      <a href="https://github.com/FQQD/MCServer-Web-Template" class="copyright">Template by FQQD - Edited by Frank-Craft Team 2026</a>
-    </footer>
   </body>
 </html>
