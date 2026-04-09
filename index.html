@@ -46,7 +46,7 @@
         position: relative; z-index: 10; color: white; text-decoration: none; margin: 0 15px; font-weight: bold;
       }
 
-      /* --- Logo Animation --- */
+      /* --- Logo Animation: Giant & 'Alive' --- */
       .main1_logo {
         width: 900px; max-width: 95vw; height: auto;
         transition: transform 0.3s ease;
@@ -64,7 +64,7 @@
 
       .main1 { padding-top: 50px; padding-bottom: 50px; position: relative; overflow: visible; }
 
-      /* --- Copier Styles --- */
+      /* --- Stupid-Proof Copier Styles --- */
       .main1_ipcopier_div { display: flex; justify-content: center; margin-top: 25px; position: relative; z-index: 3; }
       .server-instruction-container {
         font-family: 'Space Grotesk', sans-serif; text-align: center; padding: 20px;
@@ -101,13 +101,13 @@
       <div class="main1">
         <canvas id="particleCanvas" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 1;"></canvas>
 
-        <a class="main1_logo_a" href="#">
+        <a class="main1_logo_a" href="#" style="position: relative; z-index: 2;">
           <img class="main1_logo" id="logoImg" src="media/logo.png" alt="logo">
         </a>
 
         <div class="main1_description">
           <a>Discover the Village of</a><br>
-          <a class="main1_actcent">Frank-Craft</a><a>.</a>
+          <span class="main1_actcent" id="frankHeadline">Frank-Craft</span><a>.</a>
         </div>
         
         <div class="main1_ipcopier_div">
@@ -123,6 +123,7 @@
         </div>
 
         <script>
+            // --- Copier Function ---
             function copyIPMain() {
               const ip = "play.frank-craft.com";
               const btn = document.getElementById("copyBtnMain");
@@ -137,26 +138,36 @@
               });
             }
 
+            // --- Particle System ---
             const canvas = document.getElementById('particleCanvas');
             const ctx = canvas.getContext('2d');
             let particles = [];
-            function resize() { canvas.width = 1400; canvas.height = 900; }
+
+            function resize() {
+                canvas.width = 1400; 
+                canvas.height = 1000; 
+            }
             window.addEventListener('resize', resize);
             resize();
 
             class Particle {
-                constructor() {
+                constructor(spawnY) {
                     this.x = canvas.width / 2 + (Math.random() - 0.5) * 600;
-                    this.y = canvas.height / 2 + (Math.random() - 0.5) * 300;
+                    this.y = spawnY + (Math.random() - 0.5) * 100;
                     this.size = Math.random() * 5 + 2;
                     this.speedX = (Math.random() - 0.5) * 10;
                     this.speedY = (Math.random() - 0.5) * 10;
-                    const colors = ['#555', '#8B4513', '#333', '#DAA520'];
+                    const colors = ['#555', '#8B4513', '#333', '#DAA520', '#FFFFFF'];
                     this.color = colors[Math.floor(Math.random() * colors.length)];
                     this.alpha = 1;
                     this.rotation = Math.random() * 360;
                 }
-                update() { this.x += this.speedX; this.y += this.speedY; this.alpha -= 0.015; this.rotation += 4; }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.alpha -= 0.015;
+                    this.rotation += 4;
+                }
                 draw() {
                     ctx.save();
                     ctx.globalAlpha = this.alpha;
@@ -169,9 +180,20 @@
                     ctx.restore();
                 }
             }
-            function createBurst() { for (let i = 0; i < 25; i++) { particles.push(new Particle()); } }
+
+            function createBurst() {
+                const logoY = 350;      // Center of Giant Logo
+                const headlineY = 750;  // Center of "Frank-Craft" text
+                
+                // Logo Burst
+                for (let i = 0; i < 25; i++) { particles.push(new Particle(logoY)); }
+                // Headline Burst (Matching volume)
+                for (let i = 0; i < 25; i++) { particles.push(new Particle(headlineY)); }
+            }
+
             setInterval(createBurst, 3100); 
             setTimeout(() => { setInterval(createBurst, 3100); }, 1550);
+
             function animate() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 for (let i = 0; i < particles.length; i++) {
