@@ -9,8 +9,76 @@
     <link rel="stylesheet" href="media/style.css">
     <link href="https://fonts.bunny.net/css?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<body>
+    <style>
+      /* --- Merged Stupid-Proof Copier Styles --- */
+      
+      /* Target container where we place the copier */
+      .main1_ipcopier_div {
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        margin-top: 20px; /* Space above */
+      }
+
+      /* The overall container block, dark, mimicking Minecraft UI */
+      .server-instruction-container {
+        font-family: 'Space Grotesk', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        text-align: center;
+        padding: 20px;
+        background-color: #1e1e1e; /* Dark theme to match Minecraft style */
+        border-radius: 12px;
+        width: 100%;
+        max-width: 400px; /* Keeps it contained */
+        color: white;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5); /* Subtle depth */
+      }
+
+      /* Step 1 Header */
+      .header-instruction-text {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+        font-weight: bold;
+      }
+
+      /* The button: now the primary action to copy */
+      .copy-button-main {
+        background-color: #28a745; /* Green color from your image */
+        color: white;
+        border: none;
+        padding: 15px 20px;
+        font-size: 1.05rem;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s, transform 0.1s;
+        width: 100%;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      }
+
+      .copy-button-main:hover {
+        background-color: #218838;
+      }
+
+      .copy-button-main:active {
+        transform: translateY(2px);
+      }
+
+      /* Step 2 Instruction text */
+      .instruction-text-block {
+        margin-top: 15px;
+        font-size: 0.95rem;
+        line-height: 1.4;
+        color: #ccc; /* Slightly dimmer for contrast */
+      }
+
+      /* Highlight the critical action word */
+      .highlight {
+        color: #ffcc00; /* Gold/yellow highlight */
+        font-weight: bold;
+      }
+      /* ------------------------------------------- */
+    </style>
+  </head>
+  <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <nav class="desktop_navbar">
       <a href="#"><img class="desktop_navbar_logo_img" src="media/logo_small.png" alt="logo"></a>
@@ -52,28 +120,56 @@
           <a>Discover the Village of</a><br>
           <a class="main1_actcent">Frank-Craft</a><a>.</a>
         </div>
+        
         <div class="main1_ipcopier_div">
-          <button class="main1_ipcopier" onclick="copyText()" type="button">
-            <span class="main1_ipcopier_text1">play.frank-craft.com</span>
-            <br>
-            <span class="main1_ipcopier_text2">Click to copy</span>
-          </button>
+          <div class="server-instruction-container">
+            <div class="header-instruction-text">Ready to play? Follow these 2 steps:</div>
+            
+            <button class="copy-button-main" id="copyBtnMain" onclick="copyIPMain()" type="button">
+              1. CLICK TO COPY IP: play.frank-craft.com
+            </button>
+
+            <div class="instruction-text-block">
+              2. Open Minecraft and <span class="highlight">PASTE (Ctrl+V)</span> this address into your Server List.
+            </div>
+          </div>
+          
           <script>
-            function copyText() {
-                navigator.clipboard.writeText("play.frank-craft.com");
-                }
+            // --- Merged JavaScript for Copier Feedback ---
+            function copyIPMain() {
+              const ipAddress = "play.frank-craft.com";
+              const button = document.getElementById("copyBtnMain");
+              
+              // Copy to Clipboard (Native Browser Function)
+              navigator.clipboard.writeText(ipAddress).then(() => {
+                  // Visual feedback: '✅ COPIED!'
+                  const originalButtonText = button.innerHTML;
+                  button.innerHTML = "✅ COPIED!";
+                  button.style.backgroundColor = "#007bff"; // Temporarily turns blue
+                  
+                  // Restore button after 2 seconds
+                  setTimeout(() => {
+                    button.innerHTML = originalButtonText;
+                    button.style.backgroundColor = "#28a745"; // Back to green
+                  }, 2000);
+              }).catch(err => {
+                  console.error('Failed to copy: ', err);
+                  button.innerHTML = "❌ Copy Failed!";
+                  setTimeout(() => {
+                    button.innerHTML = originalButtonText;
+                  }, 2000);
+              });
+            }
+
+            // Existing template jQuery (removed click event on old button)
             $(document).ready(function() {
-            $('.main1_ipcopier').click(function() {
-                var popup = $('<div>', { class: 'main1_popup' })
-                .append($('<h3 class="copy_confirm">').text('Copied IP to clipboard'))
-                $(this).after(popup);
-                setTimeout(function() {
-                popup.remove();
-                }, 1000);
+              // The specific jQuery popup confirmation code was removed 
+              // as the visual feedback is now handled directly by the button state change.
             });
-            });
-        </script>
+            // -------------------------------------------
+          </script>
         </div>
+        
         <a href="#more" class="scroll">
           <img alt="downarrow" class="main1_downarrow" src="media/downarrow.png">
         </a>
