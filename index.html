@@ -110,40 +110,78 @@
           <span class="main1_actcent" id="frankHeadline">Frank-Craft</span><a>.</a>
         </div>
 
-        <div class="server-status-wrapper" style="text-align: center; margin-bottom: 20px; font-family: inherit;">
-    <div id="status-container" style="display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; background: rgba(255,255,255,0.1); border-radius: 50px;">
-        <span id="status-dot" style="height: 12px; width: 12px; background-color: #777; border-radius: 50%;"></span>
-        <span id="status-text" style="font-weight: bold; color: #fff; text-transform: uppercase; font-size: 14px;">Pinging Server...</span>
-        <span id="player-count" style="color: #ccc; font-size: 14px;"></span>
+       <div class="server-status-wrapper" style="text-align: center; margin-bottom: 25px; font-family: inherit; color: white;">
+    <div id="status-container" style="display: inline-block; padding: 15px 25px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; backdrop-filter: blur(5px);">
+        
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 8px;">
+            <span id="status-dot" style="height: 12px; width: 12px; background-color: #777; border-radius: 50%;"></span>
+            <span id="status-text" style="font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Pinging...</span>
+        </div>
+
+        <div id="status-details" style="font-size: 14px; opacity: 0.9; margin-bottom: 8px; display: none;">
+            Ver: <span id="server-ver" style="color: #5dade2;">--</span> 
+            <span style="margin: 0 8px; opacity: 0.3;">|</span>
+            Players: <span id="player-count" style="font-weight: bold;">0/0</span>
+        </div>
+
+        <div id="platform-badges" style="display: flex; gap: 5px; justify-content: center;">
+            <span id="badge-java" style="font-size: 10px; padding: 2px 6px; border-radius: 4px; background: #333; opacity: 0.5;">JAVA</span>
+            <span id="badge-bedrock" style="font-size: 10px; padding: 2px 6px; border-radius: 4px; background: #333; opacity: 0.5;">BEDROCK</span>
+        </div>
     </div>
 </div>
 
 <script>
-    async function getMCStatus() {
-        try {
-            const res = await fetch('https://api.mcstatus.io/v2/status/java/play.frank-craft.com');
-            const data = await res.json();
-            const dot = document.getElementById('status-dot');
-            const text = document.getElementById('status-text');
-            const players = document.getElementById('player-count');
+    async function updateFrankCraftStatus() {
+        const ip = 'play.frank-craft.com';
+        const javaBadge = document.getElementById('badge-java');
+        const bedrockBadge = document.getElementById('badge-bedrock');
+        const statusText = document.getElementById('status-text');
+        const statusDot = document.getElementById('status-dot');
+        const detailsRow = document.getElementById('status-details');
 
-            if (data.online) {
-                dot.style.backgroundColor = "#2ecc71"; // Minecraft Green
-                text.innerText = "Online";
-                text.style.color = "#2ecc71";
-                players.innerText = `| ${data.players.online} players active`;
+        try {
+            // Check Java status first
+            const javaRes = await fetch(`https://api.mcstatus.io/v2/status/java/${ip}`);
+            const javaData = await javaRes.json();
+            
+            // Check Bedrock status (standard port 19132)
+            const bedRes = await fetch(`https://api.mcstatus.io/v2/status/bedrock/${ip}`);
+            const bedData = await bedRes.json();
+
+            if (javaData.online || bedData.online) {
+                statusDot.style.backgroundColor = "#2ecc71";
+                statusText.innerText = "Server Online";
+                statusText.style.color = "#2ecc71";
+                detailsRow.style.display = "block";
+                
+                // Set Version and Players from Java (primary) or Bedrock
+                const activeData = javaData.online ? javaData : bedData;
+                document.getElementById('server-ver').innerText = activeData.version.name_clean || activeData.version.name;
+                document.getElementById('player-count').innerText = `${activeData.players.online} / ${activeData.players.max}`;
+
+                // Update Platform Badges
+                if(javaData.online) {
+                    javaBadge.style.background = "#e67e22"; // Orange for Java
+                    javaBadge.style.opacity = "1";
+                }
+                if(bedData.online) {
+                    bedrockBadge.style.background = "#3498db"; // Blue for Bedrock
+                    bedrockBadge.style.opacity = "1";
+                }
             } else {
-                dot.style.backgroundColor = "#e74c3c"; // Red
-                text.innerText = "Offline";
-                text.style.color = "#e74c3c";
-                players.innerText = "";
+                statusDot.style.backgroundColor = "#e74c3c";
+                statusText.innerText = "Server Offline";
+                statusText.style.color = "#e74c3c";
+                detailsRow.style.display = "none";
             }
         } catch (e) {
-            document.getElementById('status-text').innerText = "Status Unavailable";
+            statusText.innerText = "Maintenance Mode";
         }
     }
-    getMCStatus();
-    setInterval(getMCStatus, 60000); // Refresh every minute
+
+    updateFrankCraftStatus();
+    setInterval(updateFrankCraftStatus, 60000);
 </script>
         
         <div class="main1_ipcopier_div">
