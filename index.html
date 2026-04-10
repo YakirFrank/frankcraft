@@ -109,6 +109,47 @@
           <a>Discover the Village of</a><br>
           <span class="main1_actcent" id="frankHeadline">Frank-Craft</span><a>.</a>
         </div>
+
+        <div style="padding: 20px; text-align: center; font-family: sans-serif;">
+    <div id="server-status-container" style="display: inline-block; padding: 15px 25px; border-radius: 10px; background: rgba(0,0,0,0.05); border: 1px solid #ddd;">
+        <span id="status-dot" style="height: 12px; width: 12px; background-color: #bbb; border-radius: 50%; display: inline-block; margin-right: 10px;"></span>
+        <span id="status-text" style="font-weight: bold; color: #555;">Checking server...</span>
+        <div id="player-count" style="margin-top: 5px; font-size: 0.9em; color: #666;"></div>
+    </div>
+</div>
+
+<script>
+function updateServerStatus() {
+    const ip = 'play.frank-craft.com';
+    fetch(`https://api.mcstatus.io/v2/status/java/${ip}`)
+        .then(response => response.json())
+        .then(data => {
+            const statusDot = document.getElementById('status-dot');
+            const statusText = document.getElementById('status-text');
+            const playerCount = document.getElementById('player-count');
+
+            if (data.online) {
+                statusDot.style.backgroundColor = "#2ecc71"; // Green
+                statusText.innerHTML = "SERVER ONLINE";
+                statusText.style.color = "#2ecc71";
+                playerCount.innerHTML = `<b>${data.players.online}</b> / ${data.players.max} players currently active`;
+            } else {
+                statusDot.style.backgroundColor = "#e74c3c"; // Red
+                statusText.innerHTML = "SERVER OFFLINE";
+                statusText.style.color = "#e74c3c";
+                playerCount.innerHTML = "Check back soon!";
+            }
+        })
+        .catch(err => {
+            document.getElementById('status-text').innerHTML = "Status Unavailable";
+        });
+}
+
+// Run once on load
+updateServerStatus();
+// Optional: Update every 60 seconds
+setInterval(updateServerStatus, 60000);
+</script>
         
         <div class="main1_ipcopier_div">
           <div class="server-instruction-container">
