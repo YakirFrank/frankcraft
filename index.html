@@ -110,45 +110,40 @@
           <span class="main1_actcent" id="frankHeadline">Frank-Craft</span><a>.</a>
         </div>
 
-        <div style="padding: 20px; text-align: center; font-family: sans-serif;">
-    <div id="server-status-container" style="display: inline-block; padding: 15px 25px; border-radius: 10px; background: rgba(0,0,0,0.05); border: 1px solid #ddd;">
-        <span id="status-dot" style="height: 12px; width: 12px; background-color: #bbb; border-radius: 50%; display: inline-block; margin-right: 10px;"></span>
-        <span id="status-text" style="font-weight: bold; color: #555;">Checking server...</span>
-        <div id="player-count" style="margin-top: 5px; font-size: 0.9em; color: #666;"></div>
+        <div class="server-status-wrapper" style="text-align: center; margin-bottom: 20px; font-family: inherit;">
+    <div id="status-container" style="display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; background: rgba(255,255,255,0.1); border-radius: 50px;">
+        <span id="status-dot" style="height: 12px; width: 12px; background-color: #777; border-radius: 50%;"></span>
+        <span id="status-text" style="font-weight: bold; color: #fff; text-transform: uppercase; font-size: 14px;">Pinging Server...</span>
+        <span id="player-count" style="color: #ccc; font-size: 14px;"></span>
     </div>
 </div>
 
 <script>
-function updateServerStatus() {
-    const ip = 'play.frank-craft.com';
-    fetch(`https://api.mcstatus.io/v2/status/java/${ip}`)
-        .then(response => response.json())
-        .then(data => {
-            const statusDot = document.getElementById('status-dot');
-            const statusText = document.getElementById('status-text');
-            const playerCount = document.getElementById('player-count');
+    async function getMCStatus() {
+        try {
+            const res = await fetch('https://api.mcstatus.io/v2/status/java/play.frank-craft.com');
+            const data = await res.json();
+            const dot = document.getElementById('status-dot');
+            const text = document.getElementById('status-text');
+            const players = document.getElementById('player-count');
 
             if (data.online) {
-                statusDot.style.backgroundColor = "#2ecc71"; // Green
-                statusText.innerHTML = "SERVER ONLINE";
-                statusText.style.color = "#2ecc71";
-                playerCount.innerHTML = `<b>${data.players.online}</b> / ${data.players.max} players currently active`;
+                dot.style.backgroundColor = "#2ecc71"; // Minecraft Green
+                text.innerText = "Online";
+                text.style.color = "#2ecc71";
+                players.innerText = `| ${data.players.online} players active`;
             } else {
-                statusDot.style.backgroundColor = "#e74c3c"; // Red
-                statusText.innerHTML = "SERVER OFFLINE";
-                statusText.style.color = "#e74c3c";
-                playerCount.innerHTML = "Check back soon!";
+                dot.style.backgroundColor = "#e74c3c"; // Red
+                text.innerText = "Offline";
+                text.style.color = "#e74c3c";
+                players.innerText = "";
             }
-        })
-        .catch(err => {
-            document.getElementById('status-text').innerHTML = "Status Unavailable";
-        });
-}
-
-// Run once on load
-updateServerStatus();
-// Optional: Update every 60 seconds
-setInterval(updateServerStatus, 60000);
+        } catch (e) {
+            document.getElementById('status-text').innerText = "Status Unavailable";
+        }
+    }
+    getMCStatus();
+    setInterval(getMCStatus, 60000); // Refresh every minute
 </script>
         
         <div class="main1_ipcopier_div">
