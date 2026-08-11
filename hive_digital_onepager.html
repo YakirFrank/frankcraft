@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Hive | Digital One Pager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1A5F7A;
+            --secondary-blue: #EDF2F7;
+            --accent-blue: #3498db;
+            --conflict-red: #e74c3c;
+            --text-dark: #2D3748;
+            --text-gray: #718096;
+            --bg-color: #F8FAFC;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .document {
+            max-width: 1000px;
+            background: var(--white);
+            padding: 60px;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+            border: 1px solid #E2E8F0;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--text-gray);
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .divider {
+            width: 60px;
+            height: 4px;
+            background: var(--primary-blue);
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        section {
+            margin-bottom: 35px;
+        }
+
+        .section-header {
+            background: var(--primary-blue);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: inline-block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .content-text {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #4A5568;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .bar-container {
+            background: #F1F5F9;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px solid #E2E8F0;
+        }
+
+        .bar-labels {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .label-evidence { color: var(--accent-blue); }
+        .label-influence { color: var(--conflict-red); }
+
+        .battle-bar {
+            height: 24px;
+            background: #CBD5E0;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .side-blue {
+            height: 100%;
+            background: linear-gradient(to right, #2980b9, var(--accent-blue));
+            width: 50%;
+            animation: pushBlue 7s infinite ease-in-out;
+        }
+
+        .side-red {
+            height: 100%;
+            background: linear-gradient(to left, #c0392b, var(--conflict-red));
+            width: 50%;
+            animation: pushRed 7s infinite ease-in-out;
+        }
+
+        @keyframes pushBlue {
+            0%, 100% { width: 50%; }
+            30% { width: 85%; }
+            70% { width: 15%; }
+        }
+
+        @keyframes pushRed {
+            0%, 100% { width: 50%; }
+            30% { width: 15%; }
+            70% { width: 85%; }
+        }
+
+        .bar-note {
+            font-size: 11px;
+            color: var(--text-gray);
+            text-align: center;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .callout {
+            background: var(--secondary-blue);
+            border-left: 8px solid var(--primary-blue);
+            padding: 25px;
+            border-radius: 0 12px 12px 0;
+            margin-top: 40px;
+        }
+
+        .callout h3 {
+            margin: 0 0: 10px 0;
+            color: var(--primary-blue);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .callout p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #4A5568;
+        }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="document">
+        <header>
+            <h1>Project "Hive"</h1>
+            <div class="subtitle">The Digital Battleground of Influence and Evidence</div>
+            <div class="divider"></div>
+        </header>
+
+        <div class="grid">
+            <div class="column">
+                <section>
+                    <div class="section-header">The Core Loop</div>
+                    <div class="content-text">
+                        A high-stakes competitive environment governed by a <strong>countdown timer</strong> that forces rapid mobilization.
+                        <br><br>
+                        <strong>The Dual Force Mechanism:</strong> Victory is achieved through the balance of two opposing drivers:
+                        <ul>
+                            <li style="color: var(--conflict-red); font-weight:600;">Social Momentum: Pure volume and engagement (the "Troll" force).</li>
+                            <li style="color: var(--accent-blue); font-weight:600;">Empirical Weight: Verifiable data/scientific evidence as a high-value catalyst to swing results.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="section-header">Content Strategy: Evergreen Pillars</div>
+                    <div class="content-text">
+                        Sustainability is ensured through weekly rotation across five permanent categories:
+                        <ul>
+                            <li><strong>Sports:</strong> Clash of legends and leagues.</li>
+                            <li><strong>Music & Culture:</strong> Genre wars and cultural icons.</li>
+                            <li><strong>Science & Tech:</strong> Fact vs. Fiction (e.g., AI vs Human).</li>
+                            <li><strong>Geography/Lifestyle:</strong> Regional identities and trends.</li>
+                            <li><strong>History & Figures:</strong> Historical debates and legacy.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="section-header">Growth & Strategy</div>
+                    <div class="content-text">
+                        <strong>Dynamic Population Management:</strong> Artificial seeding of activity to prevent "empty arena" syndrome, ensuring immediate competition for new users.
+                        <br><br>
+                        <strong>The Friday Reveal:</strong> Sequential topic launches every Friday to maximize weekend engagement peaks.
+                    </div>
+                </section>
+            </div>
+
+            <div class="column">
+                <section>
+                    <div class="section-header">Progression & Gamification</div>
+                    <div class="content-text">
+                        A roadmap toward a full RPG-style identity system:
+                        <ul>
+                            <li><strong>XP and Levels:</strong> Mastery through activity.</li>
+                            <li><strong>Prestige Badges:</strong> Functional tags like <em>Horde Leader</em> or <em>Scientific Authority</em>.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="section-header">The Immersive Arena</div>
+                    <div class="content-text">
+                        A reactive UI with "Spinning Headlines" mimicking social feeds for high urgency, and thematic environmental shifts (colors/audio).
+                        
+                        <div class="bar-container">
+                            <div class="bar-labels">
+                                <span class="label-evidence">Evidence</span>
+                                <span class="label-influence">Influence</span>
+                            </div>
+                            <div class="battle-bar">
+                                <div class="side-blue"></div>
+                                <div class="side-red"></div>
+                            </div>
+                            <div class="bar-note">Live Tug-of-War Prototype: Balance shifts in real-time.</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="section-header">The Hive Economy</div>
+                    <div class="content-text">
+                        <strong>Tokenomics:</strong> A growth-focused currency based on recruitment.
+                        <ul>
+                            <li><strong>Acquisition:</strong> Earned via successful recruitment of new participants.</li>
+                            <li><strong>Utility:</strong> Future implementation of visibility boosts and specialized tags.</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="callout">
+            <h3>Strategic Team Discussion Point</h3>
+            <p>We need to determine if the UI should be a native clone of social media platforms (e.g., X/Twitter) or if we should live-connect the Studio Hive account via API for real-time synchronization between the website and external social feeds.</p>
+        </div>
+    </div>
+</body>
+</html>
