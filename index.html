@@ -1,285 +1,380 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Hive | Digital One Pager</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Frank-Craft | RPG Village</title>
+    <link rel="icon" type="image/png" href="media/favicon.png">
+    <link rel="stylesheet" href="media/style.css">
+    <link href="https://fonts.bunny.net/css?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        :root {
-            --primary-blue: #1A5F7A;
-            --secondary-blue: #EDF2F7;
-            --accent-blue: #3498db;
-            --conflict-red: #e74c3c;
-            --text-dark: #2D3748;
-            --text-gray: #718096;
-            --bg-color: #F8FAFC;
-            --white: #FFFFFF;
-        }
+      /* --- Jousting Knight Animation --- */
+      .desktop_navbar {
+        position: relative; 
+        overflow: hidden;   
+        display: flex;
+        align-items: center;
+        justify-content: center; 
+        height: 60px; 
+        background-color: #000; 
+        padding: 0 20px;
+        z-index: 100;
+      }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-dark);
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-        }
+      .jousting-knight {
+        position: absolute;
+        bottom: 5px; 
+        font-size: 1.6rem; 
+        color: #ffcc00; 
+        animation: joust-charge 12s linear infinite;
+        z-index: 1; 
+        content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23FFCC00" d="M21 17h1v-4h-1v4m-3 0h1V9h-1v8m-3 0h1v-6h-1v6M9 13v4h1v-4H9m-3 0v4h1v-4H6M2 17h1v-6H2v6M22 6.5C22 4.01 19.99 2 17.5 2S13 4.01 13 6.5s2.01 4.5 4.5 4.5c.7 0 1.34-.16 1.94-.43L19 12h-2v1h2v4h-2v1h5v-6h-2V6.5m-4.5 3c-1.66 0-3-1.34-3-3s1.34-3 3-3s3 1.34 3 3s-1.34 3-3 3Z"/></svg>');
+      }
 
-        .document {
-            max-width: 1000px;
-            background: var(--white);
-            padding: 60px;
-            border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
-            border: 1px solid #E2E8F0;
-        }
+      @keyframes joust-charge {
+        0% { transform: translateX(100vw); opacity: 0; }
+        5% { opacity: 1; }
+        50% { opacity: 1; }
+        60% { opacity: 0; transform: translateX(0); }
+        100% { transform: translateX(-100vw); opacity: 0; }
+      }
 
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
+      .desktop_navbar_logo_img { height: 35px; position: relative; z-index: 10; }
+      .desktop_navbar_link, .desktop_navbar_link2 {
+        position: relative; z-index: 10; color: white; text-decoration: none; margin: 0 15px; font-weight: bold;
+      }
 
-        h1 {
-            font-size: 42px;
-            font-weight: 800;
-            color: var(--primary-blue);
-            margin: 0;
-            letter-spacing: -1px;
-        }
+      /* --- Logo Animation: Giant & 'Alive' --- */
+      .main1_logo {
+        width: 900px; max-width: 95vw; height: auto;
+        transition: transform 0.3s ease;
+        animation: breathe 3.1s ease-in-out infinite;
+        display: block; margin: 0 auto; position: relative; z-index: 2;
+      }
 
-        .subtitle {
-            font-size: 18px;
-            color: var(--text-gray);
-            font-style: italic;
-            margin-top: 10px;
-        }
+      @keyframes breathe {
+        0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1)); }
+        50% { transform: scale(1.04); filter: drop-shadow(0 0 35px rgba(255, 255, 255, 0.4)); }
+        100% { transform: scale(1); }
+      }
 
-        .divider {
-            width: 60px;
-            height: 4px;
-            background: var(--primary-blue);
-            margin: 20px auto;
-            border-radius: 2px;
-        }
+      .main1_logo:hover { animation-play-state: paused; transform: scale(1.08); }
 
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            margin-bottom: 40px;
-        }
+      .main1 { padding-top: 50px; padding-bottom: 50px; position: relative; overflow: visible; }
 
-        section {
-            margin-bottom: 35px;
-        }
-
-        .section-header {
-            background: var(--primary-blue);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 16px;
-            margin-bottom: 15px;
-            display: inline-block;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .content-text {
-            font-size: 14px;
-            line-height: 1.7;
-            color: #4A5568;
-        }
-
-        ul { padding-left: 20px; margin: 10px 0; }
-        li { margin-bottom: 8px; font-size: 14px; }
-
-        .bar-container {
-            background: #F1F5F9;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
-            border: 1px solid #E2E8F0;
-        }
-
-        .bar-labels {
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-            font-size: 12px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .label-evidence { color: var(--accent-blue); }
-        .label-influence { color: var(--conflict-red); }
-
-        .battle-bar {
-            height: 24px;
-            background: #CBD5E0;
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .side-blue {
-            height: 100%;
-            background: linear-gradient(to right, #2980b9, var(--accent-blue));
-            width: 50%;
-            animation: pushBlue 7s infinite ease-in-out;
-        }
-
-        .side-red {
-            height: 100%;
-            background: linear-gradient(to left, #c0392b, var(--conflict-red));
-            width: 50%;
-            animation: pushRed 7s infinite ease-in-out;
-        }
-
-        @keyframes pushBlue {
-            0%, 100% { width: 50%; }
-            30% { width: 85%; }
-            70% { width: 15%; }
-        }
-
-        @keyframes pushRed {
-            0%, 100% { width: 50%; }
-            30% { width: 15%; }
-            70% { width: 85%; }
-        }
-
-        .bar-note {
-            font-size: 11px;
-            color: var(--text-gray);
-            text-align: center;
-            margin-top: 10px;
-            font-style: italic;
-        }
-
-        .callout {
-            background: var(--secondary-blue);
-            border-left: 8px solid var(--primary-blue);
-            padding: 25px;
-            border-radius: 0 12px 12px 0;
-            margin-top: 40px;
-        }
-
-        .callout h3 {
-            margin: 0 0 10px 0;
-            color: var(--primary-blue);
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .callout p {
-            margin: 0;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #4A5568;
-        }
-
-        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+      /* --- Stupid-Proof Copier Styles --- */
+      .main1_ipcopier_div { display: flex; justify-content: center; margin-top: 25px; position: relative; z-index: 3; }
+      .server-instruction-container {
+        font-family: 'Space Grotesk', sans-serif; text-align: center; padding: 20px;
+        background-color: #1e1e1e; border-radius: 12px; width: 100%; max-width: 400px;
+        color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      }
+      .header-instruction-text { font-size: 1.1rem; margin-bottom: 15px; font-weight: bold; }
+      .copy-button-main {
+        background-color: #28a745; color: white; border: none; padding: 15px 20px; font-size: 1.05rem;
+        font-weight: bold; border-radius: 8px; cursor: pointer; transition: background-color 0.2s, transform 0.1s;
+        width: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      }
+      .copy-button-main:hover { background-color: #218838; }
+      .copy-button-main:active { transform: translateY(2px); }
+      .instruction-text-block { margin-top: 15px; font-size: 0.95rem; line-height: 1.4; color: #ccc; }
+      .highlight { color: #ffcc00; font-weight: bold; }
     </style>
-</head>
-<body>
-    <div class="document">
-        <header>
-            <h1>Project "Hive"</h1>
-            <div class="subtitle">The Digital Battleground of Influence and Evidence</div>
-            <div class="divider"></div>
-        </header>
+  </head>
+  <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <nav class="desktop_navbar">
+      <span class="jousting-knight">⚔️</span> 
+      <a href="#"><img class="desktop_navbar_logo_img" src="media/logo_small.png" alt="logo"></a>
+      <a href="https://wiki.frank-craft.com/" class="desktop_navbar_link">Wiki</a>
+      <a href="#discord" class="desktop_navbar_link scroll">Community</a>
+      <a href="#about" class="desktop_navbar_link scroll">About Us</a>
+      <div class="desktop_navbar_link2_div">
+          <a href="#join" class="desktop_navbar_link2 scroll">Join Us!</a>
+      </div>
+    </nav>
 
-        <div class="grid">
-            <div class="column">
-                <section>
-                    <div class="section-header">The Core Loop</div>
-                    <div class="content-text">
-                        A high-stakes competitive environment governed by a <strong>countdown timer</strong> that forces rapid mobilization.
-                        <br><br>
-                        <strong>The Dual Force Mechanism:</strong> Victory is achieved through the balance of two opposing drivers:
-                        <ul>
-                            <li style="color: var(--conflict-red); font-weight:600;">Social Momentum: Pure volume and engagement (the "Troll" force).</li>
-                            <li style="color: var(--accent-blue); font-weight:600;">Empirical Weight: Verifiable data/scientific evidence as a high-value catalyst to swing results.</li>
-                        </ul>
-                    </div>
-                </section>
+    <div class="mainflex">
+      <div class="main1">
+        <canvas id="particleCanvas" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 1;"></canvas>
 
-                <section>
-                    <div class="section-header">Content Strategy: Evergreen Pillars</div>
-                    <div class="content-text">
-                        Sustainability is ensured through weekly rotation across five permanent categories:
-                        <ul>
-                            <li><strong>Sports:</strong> Clash of legends and leagues.</li>
-                            <li><strong>Music & Culture:</strong> Genre wars and cultural icons.</li>
-                            <li><strong>Science & Tech:</strong> Fact vs. Fiction (e.g., AI vs Human).</li>
-                            <li><strong>Geography/Lifestyle:</strong> Regional identities and trends.</li>
-                            <li><strong>History & Figures:</strong> Historical debates and legacy.</li>
-                        </ul>
-                    </div>
-                </section>
+        <a class="main1_logo_a" href="#" style="position: relative; z-index: 2;">
+          <img class="main1_logo" id="logoImg" src="media/logo.png" alt="logo">
+        </a>
 
-                <section>
-                    <div class="section-header">Growth & Strategy</div>
-                    <div class="content-text">
-                        <strong>Dynamic Population Management:</strong> Artificial seeding of activity to prevent "empty arena" syndrome, ensuring immediate competition for new users.
-                        <br><br>
-                        <strong>The Friday Reveal:</strong> Sequential topic launches every Friday to maximize weekend engagement peaks.
-                    </div>
-                </section>
-            </div>
-
-            <div class="column">
-                <section>
-                    <div class="section-header">Progression & Gamification</div>
-                    <div class="content-text">
-                        A roadmap toward a full RPG-style identity system:
-                        <ul>
-                            <li><strong>XP and Levels:</strong> Mastery through activity.</li>
-                            <li><strong>Prestige Badges:</strong> Functional tags like <em>Horde Leader</em> or <em>Scientific Authority</em>.</li>
-                        </ul>
-                    </div>
-                </section>
-
-                <section>
-                    <div class="section-header">The Immersive Arena</div>
-                    <div class="content-text">
-                        A reactive UI with "Spinning Headlines" mimicking social feeds for high urgency, and thematic environmental shifts.
-                        
-                        <div class="bar-container">
-                            <div class="bar-labels">
-                                <span class="label-evidence">Evidence</span>
-                                <span class="label-influence">Influence</span>
-                            </div>
-                            <div class="battle-bar">
-                                <div class="side-blue"></div>
-                                <div class="side-red"></div>
-                            </div>
-                            <div class="bar-note">Live Tug-of-War Prototype: Balance shifts in real-time.</div>
-                        </div>
-                    </div>
-                </section>
-
-                <section>
-                    <div class="section-header">The Hive Economy</div>
-                    <div class="content-text">
-                        <strong>Tokenomics:</strong> A growth-focused currency based on recruitment.
-                        <ul>
-                            <li><strong>Acquisition:</strong> Earned via successful recruitment of new participants.</li>
-                            <li><strong>Utility:</strong> Future implementation of visibility boosts and specialized tags.</li>
-                        </ul>
-                    </div>
-                </section>
-            </div>
+        <div class="main1_description">
+          <a>Discover the Village of</a><br>
+          <span class="main1_actcent" id="frankHeadline">Frank-Craft</span><a>.</a>
         </div>
 
-        <div class="callout">
-            <h3>Strategic Team Discussion Point</h3>
-            <p>We need to determine if the UI should be a native clone of social media platforms (e.g., X/Twitter) or if we should live-connect the Studio Hive account via API for real-time synchronization between the website and external social feeds.</p>
+       <div class="server-status-wrapper" style="text-align: center; margin-bottom: 25px; font-family: inherit; color: white;">
+    <div id="status-container" style="display: inline-block; padding: 15px 25px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; backdrop-filter: blur(5px);">
+        
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 8px;">
+            <span id="status-dot" style="height: 12px; width: 12px; background-color: #777; border-radius: 50%;"></span>
+            <span id="status-text" style="font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Pinging...</span>
+        </div>
+
+        <div id="status-details" style="font-size: 14px; opacity: 0.9; margin-bottom: 8px; display: none;">
+            Ver: <span id="server-ver" style="color: #5dade2;">--</span> 
+            <span style="margin: 0 8px; opacity: 0.3;">|</span>
+            Players: <span id="player-count" style="font-weight: bold;">0/0</span>
+        </div>
+
+        <div id="platform-badges" style="display: flex; gap: 5px; justify-content: center;">
+            <span id="badge-java" style="font-size: 10px; padding: 2px 6px; border-radius: 4px; background: #333; opacity: 0.5;">JAVA</span>
+            <span id="badge-bedrock" style="font-size: 10px; padding: 2px 6px; border-radius: 4px; background: #333; opacity: 0.5;">BEDROCK</span>
         </div>
     </div>
-</body>
+</div>
+
+<script>
+    async function updateFrankCraftStatus() {
+        const ip = 'play.frank-craft.com';
+        const javaBadge = document.getElementById('badge-java');
+        const bedrockBadge = document.getElementById('badge-bedrock');
+        const statusText = document.getElementById('status-text');
+        const statusDot = document.getElementById('status-dot');
+        const detailsRow = document.getElementById('status-details');
+
+        try {
+            // Check Java status first
+            const javaRes = await fetch(`https://api.mcstatus.io/v2/status/java/${ip}`);
+            const javaData = await javaRes.json();
+            
+            // Check Bedrock status (standard port 19132)
+            const bedRes = await fetch(`https://api.mcstatus.io/v2/status/bedrock/${ip}`);
+            const bedData = await bedRes.json();
+
+            if (javaData.online || bedData.online) {
+                statusDot.style.backgroundColor = "#2ecc71";
+                statusText.innerText = "Server Online";
+                statusText.style.color = "#2ecc71";
+                detailsRow.style.display = "block";
+                
+                // Set Version and Players from Java (primary) or Bedrock
+                const activeData = javaData.online ? javaData : bedData;
+                document.getElementById('server-ver').innerText = activeData.version.name_clean || activeData.version.name;
+                document.getElementById('player-count').innerText = `${activeData.players.online} / ${activeData.players.max}`;
+
+                // Update Platform Badges
+                if(javaData.online) {
+                    javaBadge.style.background = "#e67e22"; // Orange for Java
+                    javaBadge.style.opacity = "1";
+                }
+                if(bedData.online) {
+                    bedrockBadge.style.background = "#3498db"; // Blue for Bedrock
+                    bedrockBadge.style.opacity = "1";
+                }
+            } else {
+                statusDot.style.backgroundColor = "#e74c3c";
+                statusText.innerText = "Server Offline";
+                statusText.style.color = "#e74c3c";
+                detailsRow.style.display = "none";
+            }
+        } catch (e) {
+            statusText.innerText = "Maintenance Mode";
+        }
+    }
+
+    updateFrankCraftStatus();
+    setInterval(updateFrankCraftStatus, 60000);
+</script>
+        
+        <div class="main1_ipcopier_div">
+          <div class="server-instruction-container">
+            <div class="header-instruction-text">Ready to play? Follow these 2 steps:</div>
+            <button class="copy-button-main" id="copyBtnMain" onclick="copyIPMain()" type="button">
+              1. CLICK TO COPY IP: play.frank-craft.com
+            </button>
+            <div class="instruction-text-block">
+              2. Open Minecraft and <span class="highlight">PASTE (Ctrl+V)</span> this address into your Server List.
+            </div>
+          </div>
+        </div>
+
+        <script>
+            // --- Copier Function ---
+            function copyIPMain() {
+              const ip = "play.frank-craft.com";
+              const btn = document.getElementById("copyBtnMain");
+              navigator.clipboard.writeText(ip).then(() => {
+                  const oldTxt = btn.innerHTML;
+                  btn.innerHTML = "✅ COPIED!";
+                  btn.style.backgroundColor = "#007bff"; 
+                  setTimeout(() => {
+                    btn.innerHTML = oldTxt;
+                    btn.style.backgroundColor = "#28a745"; 
+                  }, 2000);
+              });
+            }
+
+            // --- Particle System ---
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+
+            function resize() {
+                canvas.width = 1400; 
+                canvas.height = 1000; 
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            class Particle {
+                constructor(spawnY) {
+                    this.x = canvas.width / 2 + (Math.random() - 0.5) * 600;
+                    this.y = spawnY + (Math.random() - 0.5) * 100;
+                    this.size = Math.random() * 5 + 2;
+                    this.speedX = (Math.random() - 0.5) * 10;
+                    this.speedY = (Math.random() - 0.5) * 10;
+                    const colors = ['#555', '#8B4513', '#333', '#DAA520', '#FFFFFF'];
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
+                    this.alpha = 1;
+                    this.rotation = Math.random() * 360;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.alpha -= 0.015;
+                    this.rotation += 4;
+                }
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.alpha;
+                    ctx.fillStyle = this.color;
+                    ctx.shadowBlur = 5;
+                    ctx.shadowColor = this.color;
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rotation * Math.PI / 180);
+                    ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+                    ctx.restore();
+                }
+            }
+
+            function createBurst() {
+                const logoY = 350;      // Center of Giant Logo
+                const headlineY = 750;  // Center of "Frank-Craft" text
+                
+                // Logo Burst
+                for (let i = 0; i < 25; i++) { particles.push(new Particle(logoY)); }
+                // Headline Burst (Matching volume)
+                for (let i = 0; i < 25; i++) { particles.push(new Particle(headlineY)); }
+            }
+
+            setInterval(createBurst, 3100); 
+            setTimeout(() => { setInterval(createBurst, 3100); }, 1550);
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                    if (particles[i].alpha <= 0) { particles.splice(i, 1); i--; }
+                }
+                requestAnimationFrame(animate);
+            }
+            animate();
+        </script>
+      </div>
+
+      <div id="more"></div>
+
+      <div class="main2">
+        <a class="headline">What we have</a>
+        <div class="main2_features_div">
+          <div class="main2_feature">
+            <img class="main2_feature_img" alt="Apprentice Smithy" src="media/smithy.png">
+            <a class="main2_feature_headline">Apprentice Smithy</a>
+            <a class="main2_feature_text">Custom gear and unique RPG trades.</a>
+          </div>
+          <div class="main2_feature">
+            <img class="main2_feature_img" alt="Global Waypoints" src="media/waypoints.png">
+            <a class="main2_feature_headline">Global Waypoints</a>
+            <a class="main2_feature_text">Fast travel between discovered regions.</a>
+          </div>
+          <div class="main2_feature">
+            <img class="main2_feature_img" alt="Endless Quests" src="media/quests.png">
+            <a class="main2_feature_headline">Endless Quests</a>
+            <a class="main2_feature_text">Uri the Guide will lead your journey.</a>
+          </div>
+          <div class="main2_feature">
+            <img class="main2_feature_img" alt="Secured Regions" src="media/regions.png">
+            <a class="main2_feature_headline">Secured Regions</a>
+            <a class="main2_feature_text">Grief-protected building zones.</a>
+          </div>
+          <div class="main2_feature">
+            <img class="main2_feature_img" alt="Dynamic Economy" src="media/economy.png">
+            <a class="main2_feature_headline">Dynamic Economy</a>
+            <a class="main2_feature_text">Sell your loot and build your wealth.</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="discord"></div>
+
+      <div class="main4">
+        <a class="headline">Join the Discord</a>
+        <div class="main4_dc_div">
+          <iframe class="main4_dc_widget" src="https://discord.com/widget?id=1491580977259089922&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+          <div class="main4_dc_description_div">
+            <a class="main4_dc_description_title">Let's talk!</a>
+            <a class="main4_dc_description"> ・Meet other players <br> ・Ask questions <br> ・Get notified about updates <br> ・Give feedback  <br><br> &amp; more </a>
+            <a href="https://discord.gg/v9Nd8NJTGs" class="main4_dc_button_a" target="_blank">
+              <div class="main4_dc_button">Join</div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div id="about"></div>
+
+      <div class="main5">
+        <a class="headline">Who we are</a>
+        <div class="main5_admin_div">
+          <div class="main5_admins_div main5_admins_dev_type2">
+            <img class="main5_admins_img" alt="admin member img" src="media/member_placeholder.webp">
+            <div class="main5_admins_description_div">
+              <a class="main5_admins_description_rank main5_admins_description_rank_owner">[Owner]</a>
+              <a class="main5_admins_description_title">Frank</a>
+              <a class="main5_admins_description">Architect of the <br>Village World.</a>
+            </div>
+          </div>
+          <div class="main5_admins_div main5_admins_dev_type1">
+            <img class="main5_admins_img" alt="admin member img" src="media/member_placeholder.webp">
+            <div class="main5_admins_description_div">
+              <a class="main5_admins_description_rank main5_admins_description_rank_admin">[Guide]</a>
+              <a class="main5_admins_description_title">Uri</a>
+              <a class="main5_admins_description">Guides adventurers <br>on endless quests.</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="join"></div>
+
+   
+    </div> <footer class="copyright_div">
+      <a class="copyright">NOT AN OFFICIAL MINECRAFT PRODUCT. NOT ASSOCIATED WITH MOJANG OR MICROSOFT.</a><br>
+      <a href="https://github.com/FQQD/MCServer-Web-Template" class="copyright">Template by FQQD - Edited by Frank-Craft Team 2026</a>
+    </footer>
+
+    <script>
+      const scrollLinks = document.querySelectorAll('.scroll');
+      scrollLinks.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+          event.preventDefault();
+          const target = document.querySelector(link.getAttribute('href'));
+          const offsetTop = target.offsetTop;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        });
+      });
+    </script>
+  </body>
 </html>
