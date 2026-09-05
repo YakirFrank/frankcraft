@@ -89,7 +89,7 @@
     <nav class="desktop_navbar">
       <span class="jousting-knight">⚔️</span> 
       <a href="#"><img class="desktop_navbar_logo_img" src="media/logo_small.png" alt="logo"></a>
-      <a href="https://wiki.frank-craft.com/" class="desktop_navbar_link">Wiki</a>
+      <a href="#content" class="desktop_navbar_link scroll">Content</a>
       <a href="#discord" class="desktop_navbar_link scroll">Community</a>
       <a href="#about" class="desktop_navbar_link scroll">About Us</a>
       <div class="desktop_navbar_link2_div">
@@ -141,11 +141,9 @@
         const detailsRow = document.getElementById('status-details');
 
         try {
-            // Check Java status first
             const javaRes = await fetch(`https://api.mcstatus.io/v2/status/java/${ip}`);
             const javaData = await javaRes.json();
             
-            // Check Bedrock status (standard port 19132)
             const bedRes = await fetch(`https://api.mcstatus.io/v2/status/bedrock/${ip}`);
             const bedData = await bedRes.json();
 
@@ -155,18 +153,16 @@
                 statusText.style.color = "#2ecc71";
                 detailsRow.style.display = "block";
                 
-                // Set Version and Players from Java (primary) or Bedrock
                 const activeData = javaData.online ? javaData : bedData;
                 document.getElementById('server-ver').innerText = activeData.version.name_clean || activeData.version.name;
                 document.getElementById('player-count').innerText = `${activeData.players.online} / ${activeData.players.max}`;
 
-                // Update Platform Badges
                 if(javaData.online) {
-                    javaBadge.style.background = "#e67e22"; // Orange for Java
+                    javaBadge.style.background = "#e67e22";
                     javaBadge.style.opacity = "1";
                 }
                 if(bedData.online) {
-                    bedrockBadge.style.background = "#3498db"; // Blue for Bedrock
+                    bedrockBadge.style.background = "#3498db";
                     bedrockBadge.style.opacity = "1";
                 }
             } else {
@@ -197,7 +193,6 @@
         </div>
 
         <script>
-            // --- Copier Function ---
             function copyIPMain() {
               const ip = "play.frank-craft.com";
               const btn = document.getElementById("copyBtnMain");
@@ -212,7 +207,6 @@
               });
             }
 
-            // --- Particle System ---
             const canvas = document.getElementById('particleCanvas');
             const ctx = canvas.getContext('2d');
             let particles = [];
@@ -256,12 +250,9 @@
             }
 
             function createBurst() {
-                const logoY = 350;      // Center of Giant Logo
-                const headlineY = 750;  // Center of "Frank-Craft" text
-                
-                // Logo Burst
+                const logoY = 350;
+                const headlineY = 750;
                 for (let i = 0; i < 25; i++) { particles.push(new Particle(logoY)); }
-                // Headline Burst (Matching volume)
                 for (let i = 0; i < 25; i++) { particles.push(new Particle(headlineY)); }
             }
 
@@ -314,6 +305,16 @@
         </div>
       </div>
 
+      <div id="content"></div>
+
+      <div class="main2">
+        <a class="headline">Course Syllabus</a>
+        <div style="color: white; max-width: 800px; margin: 25px auto; text-align: left; line-height: 1.6; padding: 0 20px;">
+          <h3 style="color: #ffcc00; margin-bottom: 8px;">Module 1: Getting Started</h3>
+          <p style="color: #ccc; margin-bottom: 20px;">Add your topics, schedules, and lesson descriptions here.</p>
+        </div>
+      </div>
+
       <div id="discord"></div>
 
       <div class="main4">
@@ -356,8 +357,9 @@
 
       <div id="join"></div>
 
-   
-    </div> <footer class="copyright_div">
+    </div> 
+    
+    <footer class="copyright_div">
       <a class="copyright">NOT AN OFFICIAL MINECRAFT PRODUCT. NOT ASSOCIATED WITH MOJANG OR MICROSOFT.</a><br>
       <a href="https://github.com/FQQD/MCServer-Web-Template" class="copyright">Template by FQQD - Edited by Frank-Craft Team 2026</a>
     </footer>
